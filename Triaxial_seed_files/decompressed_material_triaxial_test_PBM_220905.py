@@ -146,6 +146,7 @@ class DecompressedMaterialTriaxialTest(DEMAnalysisStage):
         self.sizes = []
         self.sigma_mean_table = []; self.tau_mean_table = []; self.sigma_rel_std_dev_table = []; self.tau_rel_std_dev_table = []; self.sigma_ratio_table = []
         self.total_stress_mean_max = 0.0
+        self.total_stress_mean_max_time = 0.0
 
         for i in range(0,18):
             self.sizes.append(0.0)
