@@ -19,7 +19,7 @@ with open(cases_run_path_and_name, "w") as f_w_cases_run:
         count = 0
         for line in f_xy_data.readlines():
             count += 1
-            if count % 3 == 0:
+            if count % 2 == 0:
                 values = [float(s) for s in line.split()]
                 sigma_limit = int(values[0])
                 shear_limit = int(values[1])
