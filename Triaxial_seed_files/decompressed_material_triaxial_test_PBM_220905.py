@@ -99,7 +99,7 @@ class DecompressedMaterialTriaxialTest(DEMAnalysisStage):
     def OutputSolutionStep(self):
         super().OutputSolutionStep()
         self.PrintGraph(self.time)
-        if self.decompression_stage_completed:
+        if self.decompression_stage_completed and self.time > 0.0:
             self.CheckSimulationEnd()
 
     def FinalizeSolutionStepPreCompression(self):
