@@ -1,9 +1,9 @@
 #!/bin/bash
-#SBATCH --job-name=UCS-linear
-#SBATCH --output=DPBM-ssmall-rR-5e11-Eb1e9-5e4-5e4-0.34-f0.05-ph40%j.out
-#SBATCH --error=DPBM-ssmall-rR-5e11-Eb1e9-5e4-5e4-0.34-f0.05-ph40%j.err
-#SBATCH --partition=HighParallelization
-#SBATCH --ntasks-per-node=10
+#SBATCH --job-name=BTS-Q-Ep6.2e10-T1e3-f0.1
+#SBATCH --output=BTS-Q-Ep6.2e10-T1e3-f0.1%j.out
+#SBATCH --error=BTS-Q-Ep6.2e10-T1e3-f0.1%j.err
+#SBATCH --partition=B510
+#SBATCH --ntasks-per-node=8
 
 ##Optional - Required memory in MB per node, or per core. Defaults are 1GB per core.
 ##SBATCH --mem=3096
@@ -16,6 +16,6 @@
 #SBATCH --time=10-0
 
 ########### Further details -> man sbatch ##########
-#export OMP_NUM_THREADS=10
+#export OMP_NUM_THREADS=8
 
 python3 decompressed_material_triaxial_test_PBM_220905.py

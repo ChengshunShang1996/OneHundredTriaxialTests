@@ -4,7 +4,7 @@ import matplotlib.pyplot as plt
 import scipy.interpolate as interp
 
 x,y,z = [],[],[]
-BTS_peak_points_path_and_name = os.path.join(os.getcwd(),'BTS_peak_points.dat')
+BTS_peak_points_path_and_name = os.path.join(os.getcwd(),'Triaxial_peak_points.dat')
 with open(BTS_peak_points_path_and_name, "r") as f_w_peak_points:
     for line in f_w_peak_points:
         values = [float(s) for s in line.split()]

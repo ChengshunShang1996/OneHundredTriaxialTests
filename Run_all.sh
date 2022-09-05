@@ -1,4 +1,4 @@
 #!/bin/bash
-python3 GenerateMultipleBTSTests.py
+python3 GenerateMultipleTriaxialTests.py
 
 sh cases_run.sh
