@@ -8,6 +8,7 @@ import shutil
 #tension_limit_list = [10, 100, 1000, 5000, 10000, 50000, 100000, 500000, 1000000, 5000000]
 #sigma_limit_list = [100, 500, 1000, 5000, 10000, 50000, 100000, 500000]
 #shear_limit_list = [10000, 50000, 100000, 200000, 300000, 400000, 500000, 600000]
+friction_list = [0.01, 0.05, 0.1, 0.3, 0.5, 0.7, 0.9]
 
 # creat the cases_run.sh
 cases_run_path_and_name = os.path.join(os.getcwd(),'cases_run.sh')
@@ -24,47 +25,47 @@ with open(cases_run_path_and_name, "w") as f_w_cases_run:
                 sigma_limit = int(values[0])
                 shear_limit = int(values[1])
 
-                #creat new folder
-                new_folder_name = 'Triaxial_Sigma' + str(sigma_limit) + '_Shear' + str(shear_limit)
-                aim_path = os.path.join(os.getcwd(),'Generated_Triaxial_cases', new_folder_name)
-                if os.path.exists(aim_path):
-                    shutil.rmtree(aim_path)
-                os.mkdir(aim_path)
+                for friction in friction_list:
 
-                #copy source file
-                seed_file_name_list = ['decompressed_material_triaxial_test_PBM_220905.py', 'G-TriaxialDEM_FEM_boundary.mdpa', 'G-TriaxialDEM.mdpa', 'ProjectParametersDEM.json', 'MaterialsDEM.json', 'run_omp.sh']
-                for seed_file_name in seed_file_name_list:
-                    seed_file_path_and_name = os.path.join(os.getcwd(),'Triaxial_seed_files',seed_file_name)
-                    aim_file_path_and_name = os.path.join(aim_path, seed_file_name)
+                    friction_to_name = str(friction).replace(".", 'dot')
+                    #creat new folder
+                    new_folder_name = 'Triaxial_Sigma' + str(sigma_limit) + '_Shear' + str(shear_limit) + '_Fric' + friction_to_name
+                    aim_path = os.path.join(os.getcwd(),'Generated_Triaxial_cases', new_folder_name)
+                    if os.path.exists(aim_path):
+                        shutil.rmtree(aim_path)
+                    os.mkdir(aim_path)
 
-                    if seed_file_name == 'MaterialsDEM.json':
-                        with open(seed_file_path_and_name, "r") as f_material:
-                            with open(aim_file_path_and_name, "w") as f_material_w:
-                                for line in f_material.readlines():
-                                    if "BOND_SIGMA_MAX" in line:
-                                        line = line.replace("1e3", str(sigma_limit))
-                                    if "BOND_TAU_ZERO" in line:
-                                        line = line.replace("2.6e6", str(shear_limit))
-                                    f_material_w.write(line)
-                    elif seed_file_name == 'run_omp.sh':
-                        with open(seed_file_path_and_name, "r") as f_run_omp:
-                            with open(aim_file_path_and_name, "w") as f_run_omp_w:
-                                for line in f_run_omp.readlines():
-                                    if "BTS-Q-Ep6.2e10-T1e3-f0.1" in line:
-                                        line = line.replace("BTS-Q-Ep6.2e10-T1e3-f0.1", new_folder_name)
-                                    f_run_omp_w.write(line)
-                    elif seed_file_name == 'ProjectParametersDEM.json':
-                        with open(seed_file_path_and_name, "r") as f_parameter:
-                            with open(aim_file_path_and_name, "w") as f_parameter_w:
-                                for line in f_parameter.readlines():
-                                    if "ConfinementPressure" in line:
-                                        line = line.replace("0.34e6", str(0.0))
-                                    f_parameter_w.write(line)
-                    else:
-                        shutil.copyfile(seed_file_path_and_name, aim_file_path_and_name) 
+                    #copy source file
+                    seed_file_name_list = ['decompressed_material_triaxial_test_PBM_220905.py', 'G-TriaxialDEM_FEM_boundary.mdpa', 'G-TriaxialDEM.mdpa', 'ProjectParametersDEM.json', 'MaterialsDEM.json', 'run_omp.sh']
+                    for seed_file_name in seed_file_name_list:
+                        seed_file_path_and_name = os.path.join(os.getcwd(),'Triaxial_seed_files',seed_file_name)
+                        aim_file_path_and_name = os.path.join(aim_path, seed_file_name)
 
-                # write the cases_run.sh
-                f_w_cases_run.write('cd '+ aim_path + '\n')
-                f_w_cases_run.write('sbatch run_omp.sh' + '\n')
+                        if seed_file_name == 'MaterialsDEM.json':
+                            with open(seed_file_path_and_name, "r") as f_material:
+                                with open(aim_file_path_and_name, "w") as f_material_w:
+                                    for line in f_material.readlines():
+                                        if "BOND_SIGMA_MAX" in line:
+                                            line = line.replace("1e3", str(sigma_limit))
+                                        if "BOND_TAU_ZERO" in line:
+                                            line = line.replace("2.6e6", str(shear_limit))
+                                        if "STATIC_FRICTION" in line:
+                                            line = line.replace("0.25", str(friction))
+                                        if "DYNAMIC_FRICTION" in line:
+                                            line = line.replace("0.24", str(friction))
+                                        f_material_w.write(line)
+                        elif seed_file_name == 'run_omp.sh':
+                            with open(seed_file_path_and_name, "r") as f_run_omp:
+                                with open(aim_file_path_and_name, "w") as f_run_omp_w:
+                                    for line in f_run_omp.readlines():
+                                        if "BTS-Q-Ep6.2e10-T1e3-f0.1" in line:
+                                            line = line.replace("BTS-Q-Ep6.2e10-T1e3-f0.1", new_folder_name)
+                                        f_run_omp_w.write(line)
+                        else:
+                            shutil.copyfile(seed_file_path_and_name, aim_file_path_and_name) 
+
+                    # write the cases_run.sh
+                    f_w_cases_run.write('cd '+ aim_path + '\n')
+                    f_w_cases_run.write('sbatch run_omp.sh' + '\n')
 
 

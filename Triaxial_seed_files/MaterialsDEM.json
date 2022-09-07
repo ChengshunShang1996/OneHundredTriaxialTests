@@ -24,8 +24,8 @@
         "Variables"           : {
             "PARTICLE_MATERIAL": 1,
             "DEM_DISCONTINUUM_CONSTITUTIVE_LAW_NAME" : "DEM_D_Quadratic",
-            "STATIC_FRICTION"                        : 0.1,
-            "DYNAMIC_FRICTION"                       : 0.1,
+            "STATIC_FRICTION"                        : 0.25,
+            "DYNAMIC_FRICTION"                       : 0.24,
             "FRICTION_DECAY"                         : 500,
             "COEFFICIENT_OF_RESTITUTION"             : 0.01,
             "K_ALPHA"                                : 45.0,
