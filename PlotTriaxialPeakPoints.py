@@ -16,13 +16,13 @@ with open(BTS_peak_points_path_and_name, "r") as f_w_peak_points:
 
 #plt.contourf(X, Y, Z, 20, cmap=plt.get_cmap('YlGn'))
 #cs = plt.tricontour(x, y, z, levels=levels, colors = 'white', linewidths = 0.1)
-plt.tricontour(x, y, z, levels=[46193, 46195], colors = 'red', linewidths = 0.5)
-#plt.tricontourf(x, y, z, levels=levels, cmap='coolwarm')
+plt.tricontour(x, y, z, levels=[2600000, 2600001], colors = 'red', linewidths = 0.5)
+plt.tricontourf(x, y, z, levels=levels, cmap='coolwarm')
 #cs.clabel(inline=True, fmt='%d', fontsize = 'smaller', manual=true)
 
 plt.xlabel('Tension_limit')
 plt.ylabel('Shear_limit')
-plt.title('BTS strength')
+plt.title('Triaxial strength')
 
-#plt.colorbar()
+plt.colorbar()
 plt.show()
