@@ -16,10 +16,10 @@ with open(cases_run_path_and_name, "w") as f_w_cases_run:
 
     xy_data_file = os.path.join(os.getcwd(),'Tensile_data.txt')
     with open(xy_data_file, "r") as f_xy_data:
-        count = 9
+        count = 1
         for line in f_xy_data.readlines():
             count += 1
-            if count % 10 == 0:
+            if count % 1 == 0:
                 values = [float(s) for s in line.split()]
                 sigma_limit = int(values[0])
                 shear_limit = int(values[1])
@@ -53,13 +53,6 @@ with open(cases_run_path_and_name, "w") as f_w_cases_run:
                                     if "BTS-Q-Ep6.2e10-T1e3-f0.1" in line:
                                         line = line.replace("BTS-Q-Ep6.2e10-T1e3-f0.1", new_folder_name)
                                     f_run_omp_w.write(line)
-                    elif seed_file_name == 'ProjectParametersDEM.json':
-                        with open(seed_file_path_and_name, "r") as f_parameter:
-                            with open(aim_file_path_and_name, "w") as f_parameter_w:
-                                for line in f_parameter.readlines():
-                                    if "ConfinementPressure" in line:
-                                        line = line.replace("0.34e6", str(0.0))
-                                    f_parameter_w.write(line)
                     else:
                         shutil.copyfile(seed_file_path_and_name, aim_file_path_and_name) 
 
