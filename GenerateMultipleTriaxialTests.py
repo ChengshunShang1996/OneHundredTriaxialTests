@@ -8,7 +8,7 @@ import shutil
 #tension_limit_list = [10, 100, 1000, 5000, 10000, 50000, 100000, 500000, 1000000, 5000000]
 #sigma_limit_list = [100, 500, 1000, 5000, 10000, 50000, 100000, 500000]
 #shear_limit_list = [10000, 50000, 100000, 200000, 300000, 400000, 500000, 600000]
-friction_list = [1.0, 1.2, 1.4, 1.6, 1.8, 2.0]
+phi_list = [0.0, 10.0, 20.0, 30.0, 40.0, 50.0, 60.0]
 
 # creat the cases_run.sh
 cases_run_path_and_name = os.path.join(os.getcwd(),'cases_run.sh')
@@ -25,11 +25,10 @@ with open(cases_run_path_and_name, "w") as f_w_cases_run:
                 sigma_limit = int(values[0])
                 shear_limit = int(values[1])
 
-                for friction in friction_list:
+                for phi in phi_list:
 
-                    friction_to_name = str(friction).replace(".", 'dot')
                     #creat new folder
-                    new_folder_name = 'Triaxial_Sigma' + str(sigma_limit) + '_Shear' + str(shear_limit) + '_Fric' + friction_to_name
+                    new_folder_name = 'Triaxial_Sigma' + str(sigma_limit) + '_Shear' + str(shear_limit) + '_Phi' + str(phi)
                     aim_path = os.path.join(os.getcwd(),'Generated_Triaxial_cases', new_folder_name)
                     if os.path.exists(aim_path):
                         shutil.rmtree(aim_path)
@@ -49,10 +48,8 @@ with open(cases_run_path_and_name, "w") as f_w_cases_run:
                                             line = line.replace("1e3", str(sigma_limit))
                                         if "BOND_TAU_ZERO" in line:
                                             line = line.replace("2.6e6", str(shear_limit))
-                                        if "STATIC_FRICTION" in line:
-                                            line = line.replace("0.25", str(friction))
-                                        if "DYNAMIC_FRICTION" in line:
-                                            line = line.replace("0.24", str(friction))
+                                        if "BOND_INTERNAL_FRICC" in line:
+                                            line = line.replace("34.3", str(phi))
                                         f_material_w.write(line)
                         elif seed_file_name == 'run_omp.sh':
                             with open(seed_file_path_and_name, "r") as f_run_omp:
