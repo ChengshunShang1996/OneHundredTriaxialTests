@@ -35,7 +35,7 @@ with open(cases_run_path_and_name, "w") as f_w_cases_run:
                     os.mkdir(aim_path)
 
                     #copy source file
-                    seed_file_name_list = ['decompressed_material_triaxial_test_PBM_220905.py', 'G-TriaxialDEM_FEM_boundary.mdpa', 'G-TriaxialDEM.mdpa', 'ProjectParametersDEM.json', 'MaterialsDEM.json', 'run_omp.sh']
+                    seed_file_name_list = ['decompressed_material_triaxial_test_PBM_220912.py', 'G-TriaxialDEM_FEM_boundary.mdpa', 'G-TriaxialDEM.mdpa', 'ProjectParametersDEM.json', 'MaterialsDEM.json', 'run_omp.sh']
                     for seed_file_name in seed_file_name_list:
                         seed_file_path_and_name = os.path.join(os.getcwd(),'Triaxial_seed_files',seed_file_name)
                         aim_file_path_and_name = os.path.join(aim_path, seed_file_name)

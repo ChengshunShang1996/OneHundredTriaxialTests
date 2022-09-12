@@ -147,6 +147,8 @@ class DecompressedMaterialTriaxialTest(DEMAnalysisStage):
         self.sigma_mean_table = []; self.tau_mean_table = []; self.sigma_rel_std_dev_table = []; self.tau_rel_std_dev_table = []; self.sigma_ratio_table = []
         self.total_stress_mean_max = 0.0
         self.total_stress_mean_max_time = 0.0
+        self.old_stress_mean = 0.0
+        self.young_modulus = 0.0
 
         for i in range(0,18):
             self.sizes.append(0.0)
@@ -247,7 +249,8 @@ class DecompressedMaterialTriaxialTest(DEMAnalysisStage):
     def MeasureForcesAndPressure(self):
 
         dt = self.spheres_model_part.ProcessInfo.GetValue(DELTA_TIME)
-        self.strain += -100 * self.length_correction_factor * self.LoadingVelocity * dt / self.height
+        strain_delta = -100 * self.length_correction_factor * self.LoadingVelocity * dt / self.height
+        self.strain += strain_delta
 
         total_force_top = 0.0
         for node in self.top_mesh_nodes:
@@ -262,6 +265,12 @@ class DecompressedMaterialTriaxialTest(DEMAnalysisStage):
         self.total_stress_bot = total_force_bot / self.MeasuringSurface
         
         self.total_stress_mean = 0.5 * (self.total_stress_bot + self.total_stress_top)
+
+        stress_mean_delta = self.total_stress_mean - self.old_stress_mean
+
+        self.young_modulus = stress_mean_delta / strain_delta
+
+        self.old_stress_mean = self.total_stress_mean
 
         if self.total_stress_mean_max < self.total_stress_mean:
             self.total_stress_mean_max = self.total_stress_mean
@@ -314,10 +323,12 @@ class DecompressedMaterialTriaxialTest(DEMAnalysisStage):
         absolute_path_to_file2 = os.path.join(self.graphs_path, self.problem_name + "_graph_top.grf")
         absolute_path_to_file3 = os.path.join(self.graphs_path, self.problem_name + "_graph_bot.grf")
         absolute_path_to_file4 = os.path.join(self.graphs_path, self.problem_name + "_graph_strain_vs_q.grf")
+        absolute_path_to_file5 = os.path.join(self.graphs_path, self.problem_name + "_graph_young.grf")
         self.graph_export_1 = open(absolute_path_to_file1, 'w')
         self.graph_export_2 = open(absolute_path_to_file2, 'w')
         self.graph_export_3 = open(absolute_path_to_file3, 'w')
         self.graph_export_4 = open(absolute_path_to_file4, 'w')
+        self.graph_export_5 = open(absolute_path_to_file5, 'w')
 
         self.procedures.KratosPrintInfo('Initial Height of the Model: ' + str(self.height)+'\n')
 
@@ -541,11 +552,13 @@ class DecompressedMaterialTriaxialTest(DEMAnalysisStage):
             self.graph_export_1.write(str("%.6g"%self.strain).rjust(13) + "  " + str("%.6g"%(self.total_stress_mean)).rjust(13) + "  " + str("%.8g"%time).rjust(12) + '\n')
             self.graph_export_2.write(str("%.8g"%self.strain).rjust(13) + "  " + str("%.6g"%(self.total_stress_top)).rjust(13) + "  " + str("%.8g"%time).rjust(12) + '\n')
             self.graph_export_3.write(str("%.8g"%self.strain).rjust(13) + "  " + str("%.6g"%(self.total_stress_bot)).rjust(13) + "  " + str("%.8g"%time).rjust(12) + '\n')
+            self.graph_export_4.write(str("%.8g"%self.strain).rjust(15) + "  " + str("%.6g"%(self.total_stress_mean - self.ConfinementPressure)).rjust(13) + '\n')
+            self.graph_export_5.write(str("%.8g"%self.strain).rjust(13) + "  " + str("%.6g"%(self.young_modulus)).rjust(13) + "  " + str("%.8g"%time).rjust(12) + '\n')
             self.graph_export_1.flush()
             self.graph_export_2.flush()
             self.graph_export_3.flush()
-            self.graph_export_4.write(str("%.8g"%self.strain).rjust(15) + "  " + str("%.6g"%(self.total_stress_mean - self.ConfinementPressure)).rjust(13) + '\n')
             self.graph_export_4.flush()
+            self.graph_export_5.flush()
         self.graph_counter += 1
     
     def FinalizeGraphs(self):
@@ -567,6 +580,7 @@ class DecompressedMaterialTriaxialTest(DEMAnalysisStage):
         self.graph_export_2.close()
         self.graph_export_3.close()
         self.graph_export_4.close()
+        self.graph_export_5.close()
 
 if __name__ == "__main__":
 

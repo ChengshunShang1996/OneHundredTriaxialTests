@@ -18,4 +18,4 @@
 ########### Further details -> man sbatch ##########
 #export OMP_NUM_THREADS=8
 
-python3 decompressed_material_triaxial_test_PBM_220905.py
+python3 decompressed_material_triaxial_test_PBM_220912.py
