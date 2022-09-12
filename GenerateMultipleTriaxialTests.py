@@ -8,7 +8,7 @@ import shutil
 #tension_limit_list = [10, 100, 1000, 5000, 10000, 50000, 100000, 500000, 1000000, 5000000]
 #sigma_limit_list = [100, 500, 1000, 5000, 10000, 50000, 100000, 500000]
 #shear_limit_list = [10000, 50000, 100000, 200000, 300000, 400000, 500000, 600000]
-friction_list = [0.01, 0.05, 0.1, 0.3, 0.5, 0.7, 0.9]
+friction_list = [1.0, 1.2, 1.4, 1.6, 1.8, 2.0]
 
 # creat the cases_run.sh
 cases_run_path_and_name = os.path.join(os.getcwd(),'cases_run.sh')
