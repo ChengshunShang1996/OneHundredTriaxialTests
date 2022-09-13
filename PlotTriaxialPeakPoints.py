@@ -6,7 +6,7 @@ import matplotlib.pyplot as plt
 levels = 50
 
 x,y,z = [],[],[]
-BTS_peak_points_path_and_name = os.path.join(os.getcwd(),'Triaxial_peak_points.dat')
+BTS_peak_points_path_and_name = os.path.join(os.getcwd(),'Triaxial_max_young.dat')
 with open(BTS_peak_points_path_and_name, "r") as f_w_peak_points:
     for line in f_w_peak_points:
         values = [float(s) for s in line.split()]
@@ -20,9 +20,9 @@ plt.tricontour(x, y, z, levels=[2600000, 2600001], colors = 'red', linewidths = 
 plt.tricontourf(x, y, z, levels=levels, cmap='coolwarm')
 #cs.clabel(inline=True, fmt='%d', fontsize = 'smaller', manual=true)
 
-plt.xlabel('Tension_limit')
-plt.ylabel('Shear_limit')
-plt.title('Triaxial strength')
+plt.xlabel('ball_young')
+plt.ylabel('bond_young')
+plt.title('Triaxial Young modulus')
 
 plt.colorbar()
 plt.show()
