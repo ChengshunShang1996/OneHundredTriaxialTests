@@ -39,7 +39,7 @@
             "BOND_SIGMA_MAX_DEVIATION"               : 0.0,
             "BOND_TAU_ZERO"                          : 524187,
             "BOND_TAU_ZERO_DEVIATION"                : 0.0,
-            "BOND_INTERNAL_FRICC"                    : 34.3,
+            "BOND_INTERNAL_FRICC"                    : 5.0,
             "BOND_ROTATIONAL_MOMENT_COEFFICIENT"     : 0.1,
             "BOND_RADIUS_FACTOR"                     : 1.0,
             "IS_UNBREAKABLE"                         : false
