@@ -9,7 +9,7 @@ import shutil
 #sigma_limit_list = [100, 500, 1000, 5000, 10000, 50000, 100000, 500000]
 #shear_limit_list = [10000, 50000, 100000, 200000, 300000, 400000, 500000, 600000]
 phi_list = [15.0, 20.0, 25.5, 30.0, 35.0]
-confining_stress_list = [0.34e6, 6.89e6, 13.79e6]
+confining_stress_list = ['0.34e6', '6.89e6', '13.79e6']
 
 # creat the cases_run.sh
 cases_run_path_and_name = os.path.join(os.getcwd(),'cases_run.sh')
@@ -31,7 +31,7 @@ with open(cases_run_path_and_name, "w") as f_w_cases_run:
                     for confining_stress in confining_stress_list:
 
                         #creat new folder
-                        new_folder_name = 'Triaxial_Sigma' + str(sigma_limit) + '_Shear' + str(shear_limit) + '_Phi' + str(phi) + 'P' + str(confining_stress)
+                        new_folder_name = 'Triaxial_Sigma' + str(sigma_limit) + '_Shear' + str(shear_limit) + '_Phi' + str(phi) + '_P' + str(confining_stress)
                         aim_path = os.path.join(os.getcwd(),'Generated_Triaxial_cases', new_folder_name)
                         if os.path.exists(aim_path):
                             shutil.rmtree(aim_path)
@@ -59,7 +59,7 @@ with open(cases_run_path_and_name, "w") as f_w_cases_run:
                                     with open(aim_file_path_and_name, "w") as f_parameter_w:
                                         for line in f_parameter.readlines():
                                             if "ConfinementPressure" in line:
-                                                line = line.replace("0.34e6", str(confining_stress))
+                                                line = line.replace("0.34e6", confining_stress)
                                             f_parameter_w.write(line)
                             elif seed_file_name == 'run_omp.sh':
                                 with open(seed_file_path_and_name, "r") as f_run_omp:
