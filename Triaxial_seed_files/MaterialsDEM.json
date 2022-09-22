@@ -4,7 +4,7 @@
         "material_id"   : 1,
         "Variables"     : {
             "PARTICLE_DENSITY"    : 2200,
-            "YOUNG_MODULUS"       : 6.2e10,
+            "YOUNG_MODULUS"       : 5.0e10,
             "POISSON_RATIO"       : 0.25,
             "PARTICLE_SPHERICITY" : 1.0
         }
@@ -12,7 +12,7 @@
         "material_name" : "DEM-S",
         "material_id"   : 2,
         "Variables"     : {
-            "YOUNG_MODULUS"       : 6.2e10,
+            "YOUNG_MODULUS"       : 5.0e10,
             "POISSON_RATIO"       : 0.25,
             "PARTICLE_SPHERICITY" : 1.0,
             "COMPUTE_WEAR"        : false
@@ -33,13 +33,13 @@
             "ROLLING_FRICTION"                       : 0.01,
             "ROLLING_FRICTION_WITH_WALLS"            : 0.01,
             "DEM_CONTINUUM_CONSTITUTIVE_LAW_NAME"    : "DEM_parallel_bond_Quadratic",
-            "BOND_YOUNG_MODULUS"                     : 6.2e8,
+            "BOND_YOUNG_MODULUS"                     : 3.0e8,
             "BOND_KNKS_RATIO"                        : 2.5,
             "BOND_SIGMA_MAX"                         : 1e3,
             "BOND_SIGMA_MAX_DEVIATION"               : 0.0,
             "BOND_TAU_ZERO"                          : 2.6e6,
             "BOND_TAU_ZERO_DEVIATION"                : 0.0,
-            "BOND_INTERNAL_FRICC"                    : 34.3,
+            "BOND_INTERNAL_FRICC"                    : 20.0,
             "BOND_ROTATIONAL_MOMENT_COEFFICIENT"     : 0.1,
             "BOND_RADIUS_FACTOR"                     : 1.0,
             "IS_UNBREAKABLE"                         : false

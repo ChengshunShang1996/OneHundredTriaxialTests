@@ -18,10 +18,10 @@ with open(cases_run_path_and_name, "w") as f_w_cases_run:
 
     xy_data_file = os.path.join(os.getcwd(),'Tensile_data.txt')
     with open(xy_data_file, "r") as f_xy_data:
-        count = 9
+        count = 29
         for line in f_xy_data.readlines():
             count += 1
-            if count % 10 == 0:
+            if count % 10 == 0 and count < 79:
                 values = [float(s) for s in line.split()]
                 sigma_limit = int(values[0])
                 shear_limit = int(values[1])
