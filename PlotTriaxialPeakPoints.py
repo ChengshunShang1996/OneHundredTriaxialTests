@@ -6,7 +6,7 @@ import matplotlib.pyplot as plt
 levels = 50
 
 x,y,z = [],[],[]
-BTS_peak_points_path_and_name = os.path.join(os.getcwd(),'Triaxial_max_young.dat')
+BTS_peak_points_path_and_name = os.path.join(os.getcwd(),'Triaxial_young_error.dat')
 with open(BTS_peak_points_path_and_name, "r") as f_w_peak_points:
     for line in f_w_peak_points:
         values = [float(s) for s in line.split()]
@@ -16,13 +16,17 @@ with open(BTS_peak_points_path_and_name, "r") as f_w_peak_points:
 
 #plt.contourf(X, Y, Z, 20, cmap=plt.get_cmap('YlGn'))
 #cs = plt.tricontour(x, y, z, levels=levels, colors = 'white', linewidths = 0.1)
-plt.tricontour(x, y, z, levels=[2600000, 2600001], colors = 'red', linewidths = 0.5)
-plt.tricontourf(x, y, z, levels=levels, cmap='coolwarm')
+#plt.tricontour(x, y, z, levels=[7.126, 7.127], colors = 'white', linewidths = 0.5)
+#plt.tricontourf(x, y, z, levels=levels, cmap='coolwarm')
 #cs.clabel(inline=True, fmt='%d', fontsize = 'smaller', manual=true)
+plt.scatter(x, y, z, cmap='coolwarm')
+for i, txt in enumerate(z):
+    txt = int(txt)
+    plt.annotate(str(txt) + '%', (x[i], y[i]))
 
 plt.xlabel('ball_young')
 plt.ylabel('bond_young')
-plt.title('Triaxial Young modulus')
+plt.title('Young modulus error ratio')
 
-plt.colorbar()
+#plt.colorbar()
 plt.show()
