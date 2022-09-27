@@ -14,10 +14,10 @@ with open(BTS_peak_points_path_and_name, "w") as f_w_peak_points:
 
     xy_data_file = os.path.join(os.getcwd(),'Tensile_data.txt')
     with open(xy_data_file, "r") as f_xy_data:
-        count = 9
+        count = 29
         for line in f_xy_data.readlines():
             count += 1
-            if count % 10 == 0:
+            if count % 10 == 0 and count < 79:
                 values = [float(s) for s in line.split()]
                 sigma_limit = int(values[0])
                 shear_limit = int(values[1])
@@ -46,4 +46,4 @@ with open(BTS_peak_points_path_and_name, "w") as f_w_peak_points:
                             rel_error += 100 * abs(max(triaxial_data_list) - 20.4294e6) / 11.9814e6
 
                     # write BTS_peak_points.dat
-                    f_w_peak_points.write(str(sigma_limit) + ' ' + str(phi) + ' ' + str(rel_error) + '\n')
+                    f_w_peak_points.write(str(sigma_limit) + ' ' + str(phi) + ' ' + str(rel_error / 3.0) + '\n')

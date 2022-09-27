@@ -2,8 +2,8 @@ import os
 import numpy as np
 import matplotlib.pyplot as plt
 
-phi_list = [20.0]
-#phi_list = [15.0, 20.0, 25.5, 30.0, 35.0]
+#phi_list = [20.0]
+phi_list = [15.0, 20.0, 25.5, 30.0, 35.0]
 confining_stress_list = ['0.34e6', '6.89e6', '13.79e6']
 
 plt.figure(1)
@@ -13,10 +13,10 @@ plt.ylabel('Peak strength / MPa')
 # creat the BTS_peak_points.dat
 xy_data_file = os.path.join(os.getcwd(),'Tensile_data.txt')
 with open(xy_data_file, "r") as f_xy_data:
-    count = 9
+    count = 29
     for line in f_xy_data.readlines():
         count += 1
-        if count % 10 == 0:
+        if count % 10 == 0 and count < 71 and count > 69:
             values = [float(s) for s in line.split()]
             sigma_limit = int(values[0])
             shear_limit = int(values[1])
@@ -35,9 +35,9 @@ with open(xy_data_file, "r") as f_xy_data:
                             for line in Young_data:
                                 values = [float(s) for s in line.split()]
                                 if confining_stress == '6.89e6':
-                                    X11.append(values[0] - 0.35)
+                                    X11.append(values[0])
                                 elif confining_stress == '13.79e6':
-                                    X11.append(values[0] - 0.65)
+                                    X11.append(values[0])
                                 else:
                                     X11.append(values[0])
                                 Y11.append((values[1] - float(confining_stress))* 1e-6)
@@ -65,13 +65,13 @@ with open('exp_13.79.txt', 'r') as Young_data:
         X13.append(values[0]) 
         Y13.append(values[1])
 
-plt.plot(X11, Y11, '-',color='black', label = "experiment-0.34")
-plt.plot(X12, Y12, '-',color='red', label = "experiment-6.89")
-plt.plot(X13, Y13, '-',color='blue', label = "experiment-13.79")
+#plt.plot(X11, Y11, '-',color='black', label = "experiment-0.34")
+##plt.plot(X12, Y12, '-',color='red', label = "experiment-6.89")
+#plt.plot(X13, Y13, '-',color='blue', label = "experiment-13.79")
 
 
-plt.xlim((0, 2))
-plt.ylim((0, 20))
+#plt.xlim((0, 4))
+#plt.ylim((0, 40))
 plt.legend(prop={'size': 8})
 plt.show()  
 
