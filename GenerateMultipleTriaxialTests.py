@@ -46,6 +46,13 @@ with open(cases_run_path_and_name, "w") as f_w_cases_run:
                                     if "BOND_YOUNG_MODULUS" in line:
                                         line = line.replace("6.2e8", bond_young)
                                     f_material_w.write(line)
+                    elif seed_file_name == 'ProjectParametersDEM.json':
+                        with open(seed_file_path_and_name, "r") as f_parameter:
+                            with open(aim_file_path_and_name, "w") as f_parameter_w:
+                                for line in f_parameter.readlines():
+                                    if "ConfinementPressure" in line:
+                                        line = line.replace("0.34e6", confining_stress)
+                                    f_parameter_w.write(line)
                     elif seed_file_name == 'run_omp.sh':
                         with open(seed_file_path_and_name, "r") as f_run_omp:
                             with open(aim_file_path_and_name, "w") as f_run_omp_w:
