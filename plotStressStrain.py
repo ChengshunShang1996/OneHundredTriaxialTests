@@ -35,9 +35,9 @@ with open(xy_data_file, "r") as f_xy_data:
                             for line in Young_data:
                                 values = [float(s) for s in line.split()]
                                 if confining_stress == '6.89e6':
-                                    X11.append(values[0])
+                                    X11.append(values[0] - 0.6)
                                 elif confining_stress == '13.79e6':
-                                    X11.append(values[0])
+                                    X11.append(values[0] - 0.9)
                                 else:
                                     X11.append(values[0])
                                 Y11.append((values[1] - float(confining_stress))* 1e-6)
@@ -65,13 +65,13 @@ with open('exp_13.79.txt', 'r') as Young_data:
         X13.append(values[0]) 
         Y13.append(values[1])
 
-#plt.plot(X11, Y11, '-',color='black', label = "experiment-0.34")
-##plt.plot(X12, Y12, '-',color='red', label = "experiment-6.89")
-#plt.plot(X13, Y13, '-',color='blue', label = "experiment-13.79")
+plt.plot(X11, Y11, '-',color='black', label = "experiment-0.34")
+plt.plot(X12, Y12, '-',color='red', label = "experiment-6.89")
+plt.plot(X13, Y13, '-',color='blue', label = "experiment-13.79")
 
 
-#plt.xlim((0, 4))
-#plt.ylim((0, 40))
+plt.xlim((0, 4))
+plt.ylim((0, 40))
 plt.legend(prop={'size': 8})
 plt.show()  
 
