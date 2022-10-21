@@ -8,8 +8,8 @@ import shutil
 #tension_limit_list = [10, 100, 1000, 5000, 10000, 50000, 100000, 500000, 1000000, 5000000]
 #sigma_limit_list = [100, 500, 1000, 5000, 10000, 50000, 100000, 500000]
 #shear_limit_list = [10000, 50000, 100000, 200000, 300000, 400000, 500000, 600000]
-f_list = [0.0, 0.25]
-phi_list = [0.0, 20.0]
+rf_list = [0.0, 0.0001, 0.001]
+phi_list = [0.0, 5.0, 10.0]
 confining_stress_list = ['0.34e6', '6.89e6', '13.79e6']
 
 
@@ -18,14 +18,14 @@ cases_run_path_and_name = os.path.join(os.getcwd(),'cases_run.sh')
 with open(cases_run_path_and_name, "w") as f_w_cases_run:
     f_w_cases_run.write('#!/bin/bash'+'\n')
 
-    for f in f_list:
+    for rf in rf_list:
 
         for phi in phi_list:
 
             for confining_stress in confining_stress_list:
 
                 #creat new folder
-                new_folder_name = 'Triaxial_f' + str(f) + '_Phi' + str(phi) + '_P' + str(confining_stress)
+                new_folder_name = 'Triaxial_rf' + str(rf) + '_Phi' + str(phi) + '_P' + str(confining_stress)
                 aim_path = os.path.join(os.getcwd(),'Generated_Triaxial_cases', new_folder_name)
                 if os.path.exists(aim_path):
                     shutil.rmtree(aim_path)
@@ -41,10 +41,10 @@ with open(cases_run_path_and_name, "w") as f_w_cases_run:
                         with open(seed_file_path_and_name, "r") as f_material:
                             with open(aim_file_path_and_name, "w") as f_material_w:
                                 for line in f_material.readlines():
-                                    if "STATIC_FRICTION" in line:
-                                        line = line.replace("0.25", str(f))
-                                    if "DYNAMIC_FRICTION" in line:
-                                        line = line.replace("0.24", str(f))
+                                    if "ROLLING_FRICTION" in line:
+                                        line = line.replace("0.01", str(rf))
+                                    if "ROLLING_FRICTION_WITH_WALLS" in line:
+                                        line = line.replace("0.01", str(rf))
                                     if "BOND_INTERNAL_FRICC" in line:
                                         line = line.replace("20.0", str(phi))
                                     f_material_w.write(line)
