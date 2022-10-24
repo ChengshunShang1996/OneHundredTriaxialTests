@@ -6,8 +6,8 @@ import matplotlib.pyplot as plt
 rf_list = [0.0, 0.0001,0.001]
 phi_list = [0.0, 5.0, 10.0]
 #phi_list = [5.0]
-#confining_stress_list = ['0.34e6', '6.89e6', '13.79e6']
-confining_stress_list = ['6.89e6']
+confining_stress_list = ['0.34e6', '6.89e6', '13.79e6']
+#confining_stress_list = ['6.89e6']
 
 plt.figure(1)
 #plt.title('Hertz model')  
@@ -60,9 +60,9 @@ with open('exp_13.79.txt', 'r') as Young_data:
         X13.append(values[0]) 
         Y13.append(values[1])
 
-#plt.plot(X11, Y11, '-',color='black', label = "experiment-0.34")
+plt.plot(X11, Y11, '-',color='black', label = "experiment-0.34")
 plt.plot(X12, Y12, '-',color='red', label = "experiment-6.89")
-#plt.plot(X13, Y13, '-',color='blue', label = "experiment-13.79")
+plt.plot(X13, Y13, '-',color='blue', label = "experiment-13.79")
 
 
 #plt.xlim((0, 4))
