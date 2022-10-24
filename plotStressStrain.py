@@ -2,10 +2,8 @@ import os
 import numpy as np
 import matplotlib.pyplot as plt
 
-#f_list = [0.01]
-f_list = [0.1, 0.05, 0.01]
-#phi_list = [40, 50, 60]
-phi_list = [60]
+f_list = [0.0, 0.25]
+phi_list = [0.0, 20.0]
 confining_stress_list = ['0.34e6', '6.89e6', '13.79e6']
 
 plt.figure(1)
@@ -64,8 +62,8 @@ plt.plot(X12, Y12, '-',color='red', label = "experiment-6.89")
 plt.plot(X13, Y13, '-',color='blue', label = "experiment-13.79")
 
 
-plt.xlim((0, 4))
-plt.ylim((0, 25))
+#plt.xlim((0, 4))
+#plt.ylim((0, 40))
 plt.legend(prop={'size': 8})
 plt.show()  
 
