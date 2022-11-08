@@ -51,7 +51,7 @@ class DecompressedMaterialTriaxialTest(DEMAnalysisStage):
             self.OutputSolutionStep()
         print("\n*************************** Finished Applying PreCompression!!!\n", flush=True)        
 
-        self._GetSolver().cplusplus_strategy.HealAllBonds()
+        #self._GetSolver().cplusplus_strategy.HealAllBonds()
         ParallelBondUtilities().SetCurrentIndentationAsAReferenceInParallelBondsForPBM(self.spheres_model_part)
         PreUtilities().ResetSkinParticles(self.spheres_model_part)
         #self._GetSolver().cplusplus_strategy.ComputeSkin(self.spheres_model_part, 1.5)
