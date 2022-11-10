@@ -25,9 +25,9 @@ for phi in phi_list:
                 for line in Young_data:
                     values = [float(s) for s in line.split()]
                     if confining_stress == '6.89e6':
-                        X11.append(values[0] - 0.6)
-                    elif confining_stress == '13.79e6':
                         X11.append(values[0] - 0.9)
+                    elif confining_stress == '13.79e6':
+                        X11.append(values[0] - 1.2)
                     else:
                         X11.append(values[0])
                     Y11.append((values[1] - float(confining_stress))* 1e-6)
