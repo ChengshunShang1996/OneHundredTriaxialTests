@@ -33,10 +33,8 @@ with open(cases_run_path_and_name, "w") as f_w_cases_run:
                     with open(seed_file_path_and_name, "r") as f_material:
                         with open(aim_file_path_and_name, "w") as f_material_w:
                             for line in f_material.readlines():
-                                if "BOND_SIGMA_MAX" in line:
-                                    line = line.replace("1e3", str(sigma_limit))
-                                if "BOND_TAU_ZERO" in line:
-                                    line = line.replace("2.6e6", str(shear_limit))
+                                if "BOND_YOUNG_MODULUS" in line:
+                                    line = line.replace("3.0e8", bondE)
                                 f_material_w.write(line)
                 elif seed_file_name == 'ProjectParametersDEM.json':
                     with open(seed_file_path_and_name, "r") as f_parameter:
