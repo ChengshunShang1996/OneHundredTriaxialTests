@@ -3,7 +3,7 @@ import shutil
 #import numpy as np
 
 
-bondE_list = ['5e8', '7e8', '1e9', '3e9']
+rollingf_list = ['0.05', '0.1', '0.3', '0.5', '0.7']
 confining_stress_list = ['0.34e6', '6.89e6', '13.79e6']
 
 
@@ -12,12 +12,12 @@ cases_run_path_and_name = os.path.join(os.getcwd(),'cases_run.sh')
 with open(cases_run_path_and_name, "w") as f_w_cases_run:
     f_w_cases_run.write('#!/bin/bash'+'\n')
 
-    for bondE in bondE_list:
+    for rollingf in rollingf_list:
 
         for confining_stress in confining_stress_list:
 
             #creat new folder
-            new_folder_name = 'Triaxial_bonbE' + bondE + '_P' + str(confining_stress)
+            new_folder_name = 'Triaxial_rollingf' + rollingf + '_P' + str(confining_stress)
             aim_path = os.path.join(os.getcwd(),'Generated_Triaxial_cases', new_folder_name)
             if os.path.exists(aim_path):
                 shutil.rmtree(aim_path)
@@ -33,8 +33,10 @@ with open(cases_run_path_and_name, "w") as f_w_cases_run:
                     with open(seed_file_path_and_name, "r") as f_material:
                         with open(aim_file_path_and_name, "w") as f_material_w:
                             for line in f_material.readlines():
-                                if "BOND_YOUNG_MODULUS" in line:
-                                    line = line.replace("3.0e8", bondE)
+                                if "ROLLING_FRICTION" in line:
+                                    line = line.replace("0.01", rollingf)
+                                if "ROLLING_FRICTION_WITH_WALLS" in line:
+                                    line = line.replace("0.01", rollingf)
                                 f_material_w.write(line)
                 elif seed_file_name == 'ProjectParametersDEM.json':
                     with open(seed_file_path_and_name, "r") as f_parameter:
