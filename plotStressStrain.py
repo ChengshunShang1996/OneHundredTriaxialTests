@@ -10,36 +10,27 @@ plt.figure(1)
 plt.xlabel('Strain / %')  
 plt.ylabel('Peak strength / MPa')   
 # creat the BTS_peak_points.dat
-xy_data_file = os.path.join(os.getcwd(),'Tensile_data.txt')
-with open(xy_data_file, "r") as f_xy_data:
-    count = 4
-    for line in f_xy_data.readlines():
-        count += 1
-        if count % 5 == 0:
-            values = [float(s) for s in line.split()]
-            sigma_limit = int(values[0])
-            shear_limit = int(values[1])
 
-            for confining_stress in confining_stress_list:
+for confining_stress in confining_stress_list:
 
-                #creat new folder
-                aim_folder_name = 'Triaxial_Sigma' + str(sigma_limit) + '_Shear' + str(shear_limit) + '_P' + str(confining_stress)
-                aim_path_and_name = os.path.join(os.getcwd(),'Generated_Triaxial_cases', aim_folder_name, 'G-Triaxial_Graphs', 'G-Triaxial_graph.grf')
+    #creat new folder
+    aim_folder_name = 'Triaxial_Sigma1e5_Shear5e5_P' + str(confining_stress)
+    aim_path_and_name = os.path.join(os.getcwd(),'Generated_Triaxial_cases', aim_folder_name, 'G-Triaxial_Graphs', 'G-Triaxial_graph.grf')
 
-                if os.path.isfile(aim_path_and_name):
-                    X11, Y11 = [], []
-                    with open(aim_path_and_name, 'r') as Young_data:
-                        for line in Young_data:
-                            values = [float(s) for s in line.split()]
-                            if confining_stress == '6.89e6':
-                                X11.append(values[0] - 0.6)
-                            elif confining_stress == '13.79e6':
-                                X11.append(values[0] - 0.9)
-                            else:
-                                X11.append(values[0])
-                            Y11.append((values[1] - float(confining_stress))* 1e-6)
-                    
-                    plt.plot(X11, Y11, '--', label = aim_folder_name)
+    if os.path.isfile(aim_path_and_name):
+        X11, Y11 = [], []
+        with open(aim_path_and_name, 'r') as Young_data:
+            for line in Young_data:
+                values = [float(s) for s in line.split()]
+                if confining_stress == '6.89e6':
+                    X11.append(values[0] - 0.6)
+                elif confining_stress == '13.79e6':
+                    X11.append(values[0] - 0.9)
+                else:
+                    X11.append(values[0])
+                Y11.append((values[1] - float(confining_stress))* 1e-6)
+        
+        plt.plot(X11, Y11, '--', label = aim_folder_name)
 
 #plt.axhline(y=7.12776, color='red', linestyle='-')
 
